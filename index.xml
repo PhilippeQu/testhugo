@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>My New Hugo Site</title><link>https://philippequ.github.io/testhugo/</link><description>Recent content on My New Hugo Site</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://philippequ.github.io/testhugo/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>My New Hugo Site</title><link>https://philippequ.github.io/testhugo/</link><description>Recent content on My New Hugo Site</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 11 Jun 2025 05:55:44 +0800</lastBuildDate><atom:link href="https://philippequ.github.io/testhugo/index.xml" rel="self" type="application/rss+xml"/><item><title>FMU模型测试说明</title><link>https://philippequ.github.io/testhugo/post/fmu-model-test-instructions-z1bksy6.html</link><pubDate>Tue, 10 Jun 2025 13:32:20 +0800</pubDate><guid>https://philippequ.github.io/testhugo/post/fmu-model-test-instructions-z1bksy6.html</guid><description>&lt;h1 id="fmu模型测试说明">
+ FMU模型测试说明
+ &lt;a class="anchor" href="#fmu%e6%a8%a1%e5%9e%8b%e6%b5%8b%e8%af%95%e8%af%b4%e6%98%8e">#&lt;/a>
+&lt;/h1>
+&lt;h1 id="文档描述">
+ 文档描述
+ &lt;a class="anchor" href="#%e6%96%87%e6%a1%a3%e6%8f%8f%e8%bf%b0">#&lt;/a>
+&lt;/h1>
+&lt;p>本文档服务于FMU除tank以外的传感器模型校验。&lt;/p>
+&lt;h1 id="测试目的">
+ 测试目的
+ &lt;a class="anchor" href="#%e6%b5%8b%e8%af%95%e7%9b%ae%e7%9a%84">#&lt;/a>
+&lt;/h1>
+&lt;p>在确保tank模型的液位高度计算相对误差小于千分之一的基础上，进行其余六个传感器模型的校验。&lt;/p></description></item></channel></rss>

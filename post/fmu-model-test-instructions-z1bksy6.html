@@ -1,0 +1,265 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  FMU模型测试说明
+  #
+
+
+  文档描述
+  #
+
+本文档服务于FMU除tank以外的传感器模型校验。
+
+  测试目的
+  #
+
+在确保tank模型的液位高度计算相对误差小于千分之一的基础上，进行其余六个传感器模型的校验。"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://philippequ.github.io/testhugo/post/fmu-model-test-instructions-z1bksy6.html"><meta property="og:site_name" content="My New Hugo Site"><meta property="og:title" content="FMU模型测试说明"><meta property="og:description" content="FMU模型测试说明 # 文档描述 # 本文档服务于FMU除tank以外的传感器模型校验。
+测试目的 # 在确保tank模型的液位高度计算相对误差小于千分之一的基础上，进行其余六个传感器模型的校验。"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2025-06-10T13:32:20+08:00"><meta property="article:modified_time" content="2025-06-11T05:55:44+08:00"><title>FMU模型测试说明 | My New Hugo Site</title><link rel=icon href=https://philippequ.github.io/testhugo/favicon.png><link rel=manifest href=https://philippequ.github.io/testhugo/manifest.json><link rel=canonical href=https://philippequ.github.io/testhugo/post/fmu-model-test-instructions-z1bksy6.html><link rel=stylesheet href=https://philippequ.github.io/testhugo/book.min.d5e59cb0aa8d22a5813c62cd5e25d3d172489a369c61dc3f622ee96ae1ebb457.css integrity="sha256-1eWcsKqNIqWBPGLNXiXT0XJImjacYdw/Yi7pauHrtFc=" crossorigin=anonymous><script defer src=https://philippequ.github.io/testhugo/fuse.min.js></script><script defer src=https://philippequ.github.io/testhugo/en.search.min.d9d2c0b420356714cbd9848826b3598acc14f04295b30ed6ebb300a0d74e1a26.js integrity="sha256-2dLAtCA1ZxTL2YSIJrNZiswU8EKVsw7W67MAoNdOGiY=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=https://philippequ.github.io/testhugo/><span>My New Hugo Site</span></a></h2><div class="book-search hidden"><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><script>document.querySelector(".book-search").classList.remove("hidden")</script></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=https://philippequ.github.io/testhugo/svg/menu.svg class=book-icon alt=Menu></label><h3>FMU模型测试说明</h3><label for=toc-control><img src=https://philippequ.github.io/testhugo/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#要求>要求</a></li><li><a href=#模型变量>模型变量</a></li><li><a href=#模型算法>模型算法</a></li></ul><ul><li><a href=#要求-1>要求</a></li><li><a href=#模型变量-1>模型变量</a></li><li><a href=#模型算法-1>模型算法</a></li><li><a href=#是否满足要求>是否满足要求</a></li></ul><ul><li><a href=#要求-2>要求</a></li><li><a href=#模型变量-2>模型变量</a></li><li><a href=#模型算法-2>模型算法</a></li><li><a href=#是否满足要求-1>是否满足要求</a></li></ul><ul><li><a href=#要求-3>要求</a></li><li><a href=#模型变量-3>模型变量</a></li><li><a href=#模型算法-3>模型算法</a></li><li><a href=#是否满足要求-2>是否满足要求</a></li></ul><ul><li><a href=#要求-4>要求</a></li><li><a href=#模型变量-4>模型变量</a></li><li><a href=#模型算法-4>模型算法</a></li><li><a href=#是否满足要求-3>是否满足要求</a></li></ul><ul><li><a href=#要求-5>要求</a></li><li><a href=#模型变量-5>模型变量</a></li><li><a href=#模型算法-5>模型算法</a></li><li><a href=#是否满足要求-4>是否满足要求</a></li></ul><ul><li><a href=#要求-6>要求</a></li><li><a href=#模型变量-6>模型变量</a></li><li><a href=#模型算法-6>模型算法</a></li><li><a href=#是否满足要求-5>是否满足要求</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=fmu模型测试说明>FMU模型测试说明
+<a class=anchor href=#fmu%e6%a8%a1%e5%9e%8b%e6%b5%8b%e8%af%95%e8%af%b4%e6%98%8e>#</a></h1><h1 id=文档描述>文档描述
+<a class=anchor href=#%e6%96%87%e6%a1%a3%e6%8f%8f%e8%bf%b0>#</a></h1><p>本文档服务于FMU除tank以外的传感器模型校验。</p><h1 id=测试目的>测试目的
+<a class=anchor href=#%e6%b5%8b%e8%af%95%e7%9b%ae%e7%9a%84>#</a></h1><p>在确保tank模型的液位高度计算相对误差小于千分之一的基础上，进行其余六个传感器模型的校验。</p><p>校验分为两步：</p><ol><li>验证传感器模型测试表现和源码算法一致性</li><li>验证源码算法和项目要求一致性</li></ol><h1 id=fmi非标实现问题>FMI非标实现问题
+<a class=anchor href=#fmi%e9%9d%9e%e6%a0%87%e5%ae%9e%e7%8e%b0%e9%97%ae%e9%a2%98>#</a></h1><p>理论上，我们应该保证两个一致性：</p><ol><li>FMU模型源码变量和<code>modelDescription.xml</code>​一致。</li><li>联合仿真过程中，master严格按照<code>modelDescription.xml</code>​调度slave模型。</li></ol><p>但实际上，FMU大多由仿真软件自动化生成，手动编写FMU模型源码存在诸多困难，可参考案例较少，即便是官方示例也没有完全遵守FMI标准。因此项目中存在一些需要非标准化处理的地方。这里陈列一些和官方FMI标准可能有出入的地方，作为注意事项。</p><ol><li>​<code>modelFunctions.c</code>​一致性问题。目前的6个传感器模型算法各自都用一个c函数实现，为了便于封装，最初都写在同一个<code>modelFunctions.c</code>​中，在不同的FMU项目中复制粘贴以简化操作。但由于后续缺乏维护，不同FMU模型的<code>modelFunctions.c</code>​文件只能保证当前模型计算函数正确，不具备一致性。</li><li>​<code>modelDescription.xml</code>​变量冗余。同样为了简化操作，不同传感器模型中的<code>modelDescription.xml</code>​关于变量声明的部分直接复制粘贴，导致<code>modelDescription.xml</code>​中的变量冗余，不能完全反应源码真实情况，二者缺乏一致性。</li><li>默认值硬编码问题。部分模型将 input 变量的默认值硬编码在模型结构体中，且没有在<code>modelDescription.xml</code>​中注明。</li><li>tank模型将<code>rotation_x</code>​等input旋转值，和加速度合并为总旋转值后重新赋值给原变量，可能不符合<code>modelDescription.xml</code>​。</li><li>master-slave联合仿真时，master没有完全按照<code>modelDescription.xml</code>​调度变量。使用master调度7个模型时，会获取tank模型的input并输入至其他模型。这在一定程度上简化了计算，但如果要调整旋转顺序，可能需要调换变量真实值的顺序，导致歧义。</li></ol><h1 id=处理方式>处理方式
+<a class=anchor href=#%e5%a4%84%e7%90%86%e6%96%b9%e5%bc%8f>#</a></h1><p>由于我们不需要将FMU模型导入至仿真软件使用，因此暂不考虑重构代码使其符合FMI标准，只考虑以下三者之间的一致性：</p><ol><li>单个fmu核心算法模块正确</li><li>联合仿真调度无异常</li><li>java api正常工作</li></ol><h1 id=传感器模型文档>传感器模型文档
+<a class=anchor href=#%e4%bc%a0%e6%84%9f%e5%99%a8%e6%a8%a1%e5%9e%8b%e6%96%87%e6%a1%a3>#</a></h1><p>具体模型文档参考FMU传感器模型文档<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>。</p><h1 id=已有测试结果总结>已有测试结果总结
+<a class=anchor href=#%e5%b7%b2%e6%9c%89%e6%b5%8b%e8%af%95%e7%bb%93%e6%9e%9c%e6%80%bb%e7%bb%93>#</a></h1><p>‍</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><h1 id=fmu传感器模型文档>FMU传感器模型文档
+<a class=anchor href=#fmu%e4%bc%a0%e6%84%9f%e5%99%a8%e6%a8%a1%e5%9e%8b%e6%96%87%e6%a1%a3>#</a></h1><h1 id=0-tank-油箱模型>0: tank 油箱模型
+<a class=anchor href=#0-tank-%e6%b2%b9%e7%ae%b1%e6%a8%a1%e5%9e%8b>#</a></h1><h2 id=要求>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82>#</a></h2><p>根据油箱三维模型以及姿态、加速度、油量，静态计算液面高度。</p><h2 id=模型变量>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用变量
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>STL_path;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> delta_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> acceleration_x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> acceleration_y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> acceleration_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> volume;
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> height;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span></code></pre></div><h2 id=模型算法>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95>#</a></h2><p>王洪轩_飞机燃油油箱油液体积的快速网格折叠体积算法</p><h1 id=1-consumption-sensor-耗量传感器>1: consumption sensor 耗量传感器
+<a class=anchor href=#1-consumption-sensor-%e8%80%97%e9%87%8f%e4%bc%a0%e6%84%9f%e5%99%a8>#</a></h1><h2 id=要求-1>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-1>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610183343-jo6b8u5.png alt=image></p><h2 id=模型变量-1>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-1>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> K;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> delta_v;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> height;
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> n;
+</span></span></code></pre></div><h2 id=模型算法-1>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-1>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>model_consumption_sensor</span>(<span style=color:#66d9ef>double</span> K, <span style=color:#66d9ef>double</span> delta_v)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> n <span style=color:#f92672>=</span> K <span style=color:#f92672>*</span> delta_v;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> n;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=是否满足要求>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82>#</a></h2><p>已满足</p><h1 id=2-density-sensor-密度传感器>2: density sensor 密度传感器
+<a class=anchor href=#2-density-sensor-%e5%af%86%e5%ba%a6%e4%bc%a0%e6%84%9f%e5%99%a8>#</a></h1><h2 id=要求-2>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-2>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610183500-5g6utig.png alt=image></p><h2 id=模型变量-2>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-2>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> K0;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>//double K1;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K2;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> T;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> height;
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> density;
+</span></span></code></pre></div><h2 id=模型算法-2>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-2>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>model_density_sensor</span>(<span style=color:#66d9ef>double</span> T, <span style=color:#66d9ef>double</span> K0, <span style=color:#66d9ef>double</span> K2)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> density<span style=color:#f92672>=</span> K0 <span style=color:#f92672>+</span> K2 <span style=color:#f92672>*</span> <span style=color:#a6e22e>pow</span>(T, <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> density;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=是否满足要求-1>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82-1>#</a></h2><p>尚未满足，谐振频率需要透传</p><h1 id=3-dielectric-constant-sensor-介电常数传感器>3: dielectric constant sensor 介电常数传感器
+<a class=anchor href=#3-dielectric-constant-sensor-%e4%bb%8b%e7%94%b5%e5%b8%b8%e6%95%b0%e4%bc%a0%e6%84%9f%e5%99%a8>#</a></h1><h2 id=要求-3>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-3>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610183836-icjjopt.png alt=image></p><h2 id=模型变量-3>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-3>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> y;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> z;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> epsilon_oil;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> sensor_height;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K00;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K10;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K01;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K20;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K11;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K02;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> height;
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> C;
+</span></span></code></pre></div><h2 id=模型算法-3>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-3>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>double</span> H;<span style=color:#75715e>//旋转变换后的传感器安装点z坐标 - min_z
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>double</span> h <span style=color:#f92672>=</span> sensor_height;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>model_dielectric_constant_sensor</span>(<span style=color:#66d9ef>double</span> h, <span style=color:#66d9ef>double</span> epsilon_oil, <span style=color:#66d9ef>double</span> H, <span style=color:#66d9ef>double</span> K00, <span style=color:#66d9ef>double</span> K10, <span style=color:#66d9ef>double</span> K01, <span style=color:#66d9ef>double</span> K20, <span style=color:#66d9ef>double</span> K11, <span style=color:#66d9ef>double</span> K02)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// double deta_C = 2 * PI * delta_epsilon_oil / log(r1 / r2);
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// return deta_C;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> C <span style=color:#f92672>=</span> K00 <span style=color:#f92672>+</span> K10 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>+</span> K01 <span style=color:#f92672>*</span> h <span style=color:#f92672>+</span> K20 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>+</span> K11 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>*</span> h <span style=color:#f92672>+</span> K02 <span style=color:#f92672>*</span> h <span style=color:#f92672>*</span> h;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> C;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>未使用的H输入，算法中并未利用，可能是忘删了。</p><h2 id=是否满足要求-2>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82-2>#</a></h2><p>已满足</p><h1 id=4-fuel-level-indicator-油液信号器>4: fuel level indicator 油液信号器
+<a class=anchor href=#4-fuel-level-indicator-%e6%b2%b9%e6%b6%b2%e4%bf%a1%e5%8f%b7%e5%99%a8>#</a></h1><h2 id=要求-4>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-4>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610184032-mrvwfzv.png alt=image></p><h2 id=模型变量-4>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-4>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> y;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> z;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> type;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> tension;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z; <span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> height; <span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> S;
+</span></span></code></pre></div><h2 id=模型算法-4>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-4>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//  type 0 : full-fuel indicator
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//  type 1 : empty-fuel indicator
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>double</span> H;<span style=color:#75715e>//旋转变换后的传感器安装点z坐标 - min_z
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>double</span> Hf <span style=color:#f92672>=</span> H;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>double</span> He <span style=color:#f92672>=</span> H;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>double</span> h <span style=color:#f92672>=</span> height;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>model_fuel_level_indicator</span>(<span style=color:#66d9ef>int</span> type, <span style=color:#66d9ef>double</span> Hf, <span style=color:#66d9ef>double</span> He, <span style=color:#66d9ef>double</span> h, <span style=color:#66d9ef>double</span> tension)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (type <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (h <span style=color:#f92672>&lt;</span> Hf)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> tension;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (type <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (h <span style=color:#f92672>&lt;</span> He)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> tension;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;Wrong type! Type must be 0(full-fuel indicator) or 1(empty-fuel indicator)!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=是否满足要求-3>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82-3>#</a></h2><p>存疑，这里将信号器压缩为一个点，油液高度大于安装高度即可输出满油电压，理论上没问题。</p><h1 id=5-fuel-level-sensor-油液传感器>5: fuel level sensor 油液传感器
+<a class=anchor href=#5-fuel-level-sensor-%e6%b2%b9%e6%b6%b2%e4%bc%a0%e6%84%9f%e5%99%a8>#</a></h1><h2 id=要求-5>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-5>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610184723-nldyzmf.png alt=image></p><h2 id=模型变量-5>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-5>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x_up;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> y_up;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> z_up;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x_down;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> y_down;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> z_down;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> epsilon_oil;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K00;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K10;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K01;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K20;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K11;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> K02;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_y;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_z;<span style=color:#75715e>//合并加速度的旋转角 //算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> min_z; <span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> height; <span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> height_in_oil;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> C;
+</span></span></code></pre></div><h2 id=模型算法-5>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-5>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>double</span> h <span style=color:#f92672>=</span> height_in_oil
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>model_fuel_level_sensor</span>(<span style=color:#66d9ef>double</span> h, <span style=color:#66d9ef>double</span> epsilon_oil, <span style=color:#66d9ef>double</span> H, <span style=color:#66d9ef>double</span> K00, <span style=color:#66d9ef>double</span> K10, <span style=color:#66d9ef>double</span> K01, <span style=color:#66d9ef>double</span> K20, <span style=color:#66d9ef>double</span> K11, <span style=color:#66d9ef>double</span> K02)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// double C = (h * 2 * PI * (epsilon_oil - epsilon_air) + 2 * PI * epsilon_air * H) / log(r2 / r1);
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> C <span style=color:#f92672>=</span> K00 <span style=color:#f92672>+</span> K10 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>+</span> K01 <span style=color:#f92672>*</span> h <span style=color:#f92672>+</span> K20 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>+</span> K11 <span style=color:#f92672>*</span> epsilon_oil <span style=color:#f92672>*</span> h <span style=color:#f92672>+</span> K02 <span style=color:#f92672>*</span> h <span style=color:#f92672>*</span> h;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> C;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=是否满足要求-4>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82-4>#</a></h2><p>根据油液高度和安装位置计算浸油高度，再根据浸油高度拟合电容值，理论上正确。</p><h1 id=6-temperature-sensor-温度传感器>6: temperature sensor 温度传感器
+<a class=anchor href=#6-temperature-sensor-%e6%b8%a9%e5%ba%a6%e4%bc%a0%e6%84%9f%e5%99%a8>#</a></h1><h2 id=要求-6>要求
+<a class=anchor href=#%e8%a6%81%e6%b1%82-6>#</a></h2><p><img src=https://philippequ.github.io/testhugo/images/image-20250610184931-wfykn2x.png alt=image></p><h2 id=模型变量-6>模型变量
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e5%8f%98%e9%87%8f-6>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>//无用输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> counter;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> calculate_step_size;
+</span></span><span style=display:flex><span><span style=color:#75715e>//通过java api输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> A;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> B;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> C;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> R0;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> T;<span style=color:#75715e>//算法输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//tank输出再输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> rotation_x;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_y;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> rotation_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> min_z;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> height;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>double</span> RT;
+</span></span></code></pre></div><h2 id=模型算法-6>模型算法
+<a class=anchor href=#%e6%a8%a1%e5%9e%8b%e7%ae%97%e6%b3%95-6>#</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>model_temperature_sensor</span>(<span style=color:#66d9ef>double</span> R0, <span style=color:#66d9ef>double</span> A, <span style=color:#66d9ef>double</span> B, <span style=color:#66d9ef>double</span> C, <span style=color:#66d9ef>double</span> T)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>double</span> R_T;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (T <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>        R_T <span style=color:#f92672>=</span> R0 <span style=color:#f92672>*</span> (<span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> A <span style=color:#f92672>*</span> T <span style=color:#f92672>+</span> B <span style=color:#f92672>*</span> <span style=color:#a6e22e>pow</span>(T, <span style=color:#ae81ff>2</span>) <span style=color:#f92672>+</span> C <span style=color:#f92672>*</span> (T <span style=color:#f92672>-</span> <span style=color:#ae81ff>100</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>pow</span>(T, <span style=color:#ae81ff>3</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>        R_T <span style=color:#f92672>=</span> R0 <span style=color:#f92672>*</span> (<span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> A <span style=color:#f92672>*</span> T <span style=color:#f92672>+</span> B <span style=color:#f92672>*</span> <span style=color:#a6e22e>pow</span>(T, <span style=color:#ae81ff>2</span>));
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> R_T;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=是否满足要求-5>是否满足要求
+<a class=anchor href=#%e6%98%af%e5%90%a6%e6%bb%a1%e8%b6%b3%e8%a6%81%e6%b1%82-5>#</a></h2><p>已满足&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#要求>要求</a></li><li><a href=#模型变量>模型变量</a></li><li><a href=#模型算法>模型算法</a></li></ul><ul><li><a href=#要求-1>要求</a></li><li><a href=#模型变量-1>模型变量</a></li><li><a href=#模型算法-1>模型算法</a></li><li><a href=#是否满足要求>是否满足要求</a></li></ul><ul><li><a href=#要求-2>要求</a></li><li><a href=#模型变量-2>模型变量</a></li><li><a href=#模型算法-2>模型算法</a></li><li><a href=#是否满足要求-1>是否满足要求</a></li></ul><ul><li><a href=#要求-3>要求</a></li><li><a href=#模型变量-3>模型变量</a></li><li><a href=#模型算法-3>模型算法</a></li><li><a href=#是否满足要求-2>是否满足要求</a></li></ul><ul><li><a href=#要求-4>要求</a></li><li><a href=#模型变量-4>模型变量</a></li><li><a href=#模型算法-4>模型算法</a></li><li><a href=#是否满足要求-3>是否满足要求</a></li></ul><ul><li><a href=#要求-5>要求</a></li><li><a href=#模型变量-5>模型变量</a></li><li><a href=#模型算法-5>模型算法</a></li><li><a href=#是否满足要求-4>是否满足要求</a></li></ul><ul><li><a href=#要求-6>要求</a></li><li><a href=#模型变量-6>模型变量</a></li><li><a href=#模型算法-6>模型算法</a></li><li><a href=#是否满足要求-5>是否满足要求</a></li></ul></nav></div></aside></main></body></html>
