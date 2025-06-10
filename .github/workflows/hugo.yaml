@@ -42,11 +42,11 @@ jobs:
       - name: Build
         run: hugo --gc --minify
 
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./public
           publish_branch: gh-pages
+
           # 如果是私有仓库，需设置 deploy_key 或 personal_token
