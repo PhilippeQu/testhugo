@@ -31,8 +31,13 @@ jobs:
           hugo-version: '0.120.2'
           extended: true
 
-      - name: Install Dart Sass
-        run: sudo snap install dart-sass
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: 全局安装 Dart Sass（npm 版）
+        run: npm install -g sass
 
       - name: Build
         run: hugo --gc --minify
